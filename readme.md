@@ -1,10 +1,10 @@
-# minimalistic Go(rilla) websocket server example with SQL DB for persistent user-data and sample client.
+# Go(rilla) websocket server example with SQL DB for persistent user-data and sample client.
 
 ## serves http by default on port :8080
 
 number of maximum connections depends on OS. max for windows is 2000. linux can be increased further. windows default is between 256 and 1028. 
 
-connection to valid (my)SQL DB is required. (dialect is exchangeable)
+### connection to valid (my)SQL DB is required. (dialect is exchangeable)
 
 after a connection is promoted to websocket, the client is asked for credentials. -> "request_credentials"
 
