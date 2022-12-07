@@ -1,8 +1,7 @@
-var ws = new WebSocket("ws://localhost:8080/ws")
+var ws = new WebSocket("ws://"+ window.location.hostname +":8080/ws")
 const MSG_DELIMITER = "<;>"
 
-
-export class Index extends React.Component {
+class Index extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {}
@@ -18,25 +17,17 @@ export class Index extends React.Component {
             ws.send("credentials"+MSG_DELIMITER+cookie("id")+ MSG_DELIMITER + cookie("name")+ MSG_DELIMITER +cookie("password"));
         }
         if(data[0] == "user_data") {
-            document.cookie = "id=" + data[1];
-            document.cookie = "name=" + data[2];
-            document.cookie = "password=" + data[3];
-            this.setState({
-                id: data[1],
-                name: data[2],
-                password: data[3],
-                email :     data[4],
-                secretQuestion : data[5],
-                secretAnswer : data[6],
-                
-                power : Number(data[7]),
-                lastActive : new Date(data[8]),
-                rating : Number(data[9]),
-            })
+            let userData = JSON.parse(data[1])
+            document.cookie = "id="+userData.id
+            document.cookie = "name="+userData.name
+            document.cookie = "password="+userData.password
+            this.setState(userData)
         }
     }
     render() {
-        return React.createElement("div", {}, "Hello "+ this.state.name)
+        if(this.state.id)
+            return React.createElement("div", {}, "Hello "+ this.state.name)
+        else return React.createElement("div", {}, "authenticating...")
     }
 }
 
@@ -45,11 +36,11 @@ function start_app() {
         React.createElement(Index), document.getElementById('root')
     )
   }
-  start_app();
+start_app();
 
 
 function cookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) return parts.pop().split(";").shift();
-  }
+}
