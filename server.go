@@ -4,22 +4,12 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"sync"
 
 	"github.com/gorilla/websocket"
 )
 
 const MSG_DELIMITER = "<;>"
 const PORT = ":8080"
-
-var SocketToUserSyncMap = sync.Map{}
-var ActiveSocketCount = 0
-
-type ActiveUser struct {
-	Id          string   //unchangable unique id for user USERID_LENGTH random characters a-z, A-Z, 0-9, _
-	SocketCount int      //number of websockets user is connected with
-	Websockets  sync.Map //websockets user is connected with
-}
 
 func main() {
 	http.HandleFunc("/", servePublic)      //serve files from public folder on root
