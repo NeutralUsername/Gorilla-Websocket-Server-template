@@ -1,3 +1,3 @@
-# Gorilla Websocket Server with React Frontend template
+# minimalistic (Go)rilla Websocket Server with React Frontend
 
 ## serves http by default on port :8080
